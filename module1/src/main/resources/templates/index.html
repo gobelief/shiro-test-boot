@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:form="http://www.w3.org/1999/xhtml"
+      xmlns:sys="http://www.w3.org/1999/XSL/Transform">
+<head>
+    <meta charset="UTF-8">
+    <title>This is html</title>
+</head>
+<body>
+<center><span th:text="${message}"></span><span th:text="${err}"></span>
+    <form action="/c/login" method="post">
+        <tr>
+            <label for="username">用户名:</label><span th:text="${session.message}"></span>
+            <input type="text" id="username" name="username"/>
+        </tr>
+        <tr>
+            <label for="password">密码:</label>
+            <input type="text" id="password" name="password"/>
+        </tr>
+        <form:span >${message}</form:span>
+        <form:input path="${message}"></form:input>
+        <button type="submit">submit</button>
+        <sys:message content="${message}" showType="1"/>
+    </form>aaa
+    <p th:text="${#httpServletRequest.getAttribute('message')}">Test</p>
+</center>
+</body>
+</html>
