@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:form="http://www.w3.org/1999/xhtml"
-      xmlns:sys="http://www.w3.org/1999/XSL/Transform">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sys="http://www.w3.org/1999/XSL/Transform" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="UTF-8">
     <title>This is html</title>
@@ -16,11 +16,13 @@
             <label for="password">密码:</label>
             <input type="text" id="password" name="password"/>
         </tr>
-        <form:span >${message}</form:span>
-        <form:input path="${message}"></form:input>
+        <p shiro:user="">
+            Welcome back John! Not John? Click <a href="login.html">here</a> to login.
+        </p>
+        <p th:text="${account}"></p>
         <button type="submit">submit</button>
         <sys:message content="${message}" showType="1"/>
-    </form>aaa
+    </form>
     <p th:text="${#httpServletRequest.getAttribute('message')}">Test</p>
 </center>
 </body>

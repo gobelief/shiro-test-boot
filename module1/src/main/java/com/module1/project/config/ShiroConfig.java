@@ -1,5 +1,6 @@
 package com.module1.project.config;
 
+import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import com.module1.project.verific.MyRealm;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
@@ -90,7 +91,10 @@ public class ShiroConfig {
     public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor() {
         return new AuthorizationAttributeSourceAdvisor();
     }
-
+    @Bean
+    public ShiroDialect shiroDialect() {
+        return new ShiroDialect();
+    }
 //    /**
 //     * Shiro生命周期处理器 * @return
 //     */

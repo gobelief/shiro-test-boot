@@ -43,6 +43,7 @@ public class WebController {
             subject.login(usernamePasswordToken);
             logger.info("对用户[" + user.getUsername() + "]进行登录验证..验证通过");
             if(subject.isAuthenticated()){
+                model.addAttribute("account",SecurityUtils.getSubject().getPrincipal());
                 return "login";
             }else {
                 usernamePasswordToken.clear();
