@@ -1,4 +1,4 @@
-package com.boottest.bt01.module1;
+package com.module1;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +11,7 @@ public class Module1ApplicationTests {
 
     @Test
     public void contextLoads() {
+
     }
 
 }
