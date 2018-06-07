@@ -1,4 +1,4 @@
-package com.module1.utils;
+package com.module1.comms.utils;
 
 
 import javax.persistence.*;

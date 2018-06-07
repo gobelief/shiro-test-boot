@@ -1,6 +1,6 @@
 package com.module1.project.pojo;
 
-import com.module1.utils.BaseEntity;
+import com.module1.comms.utils.BaseEntity;
 import lombok.Data;
 
 import java.util.List;

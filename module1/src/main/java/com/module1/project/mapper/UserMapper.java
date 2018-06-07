@@ -1,7 +1,7 @@
 package com.module1.project.mapper;
 
 import com.module1.project.pojo.User;
-import com.module1.utils.MyMapper;
+import com.module1.comms.utils.MyMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 

@@ -36,7 +36,7 @@ myRedis:
   password:
 mapper:
   mappers:
-      - com.module1.utils.MyMapper
+      - com.module1.comms.utils.MyMapper
   not-empty: false
   identity: MYSQL
 pagehelper:
