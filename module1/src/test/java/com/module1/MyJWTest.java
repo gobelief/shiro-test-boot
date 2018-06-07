@@ -6,11 +6,14 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.google.gson.Gson;
+import com.module1.project.pojo.User;
 import org.junit.Test;
 
 import java.io.UnsupportedEncodingException;
 import java.security.interfaces.RSAPublicKey;
 import java.util.Date;
+import java.util.UUID;
 
 public class MyJWTest {
 
@@ -47,5 +50,16 @@ public class MyJWTest {
             e.printStackTrace();
         }
         System.out.println((System.currentTimeMillis() - start) / 1000D);
+    }
+    @Test
+    public void gsonTest() {
+        Gson g = new Gson();
+        User user = new User();
+        user.setUsername("asfasdf");
+        user.setPassword("sdfasf");
+        UUID u = UUID.randomUUID();
+        String uid = u.toString().replace("-","").toUpperCase();
+        System.out.println(g.toJson(user));
+
     }
 }

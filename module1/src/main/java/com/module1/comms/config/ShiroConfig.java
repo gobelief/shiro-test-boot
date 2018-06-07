@@ -1,9 +1,10 @@
-package com.module1.project.config;
+package com.module1.comms.config;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
-import com.module1.project.verific.MyRealm;
-import org.apache.shiro.authc.credential.CredentialsMatcher;
+import com.module1.comms.verific.MyRealm;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.cache.ehcache.EhCacheManager;
+import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -13,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.apache.shiro.mgt.SecurityManager;
 import org.springframework.context.annotation.DependsOn;
 
 import java.util.LinkedHashMap;
@@ -27,13 +27,14 @@ public class ShiroConfig {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         //Shiro的核心安全接口,这个属性是必须的
         shiroFilterFactoryBean.setSecurityManager(securityManager);
-        shiroFilterFactoryBean.setLoginUrl("/c");
+        shiroFilterFactoryBean.setLoginUrl("/c/login");
         //shiroFilterFactoryBean.setSuccessUrl("");
         shiroFilterFactoryBean.setUnauthorizedUrl("/403");
 
-        /*定义shiro过滤器,例如实现自定义的FormAuthenticationFilter，需要继承FormAuthenticationFilter **本例中暂不自定义实现，在下一节实现验证码的例子中体现 */
-
-        /*定义shiro过滤链 Map结构 * Map中key(xml中是指value值)的第一个'/'代表的路径是相对于HttpServletRequest.getContextPath()的值来的 * anon：它对应的过滤器里面是空的,什么都没做,这里.do和.jsp后面的*表示参数,比方说login.jsp?main这种 * authc：该过滤器下的页面必须验证后才能访问,它是Shiro内置的一个拦截器org.apache.shiro.web.filter.authc.FormAuthenticationFilter */
+        /*定义shiro过滤链 Map结构 * Map中key(xml中是指value值)的第一个'/'
+        代表的路径是相对于HttpServletRequest.getContextPath()的值来的 * anon：它对应的过滤器里面是空的,
+        什么都没做,这里.do和.jsp后面的*表示参数,比方说login.jsp?main这种 * authc：该过滤器下的页面必须验证后才能访问,
+        它是Shiro内置的一个拦截器org.apache.shiro.web.filter.authc.FormAuthenticationFilter */
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
         // 配置退出过滤器,其中的具体的退出代码Shiro已经替我们实现了
         filterChainDefinitionMap.put("/c/logout", "logout");
@@ -49,11 +50,6 @@ public class ShiroConfig {
 
         return shiroFilterFactoryBean;
     }
-//    @Bean
-//    public EhCacheManager ehCacheManager() {
-//        EhCacheManager cacheManager = new EhCacheManager();
-//        return cacheManager;
-//    }
     /**
      * 不指定名字的话，自动创建一个方法名第一个字母小写的bean * @Bean(name = "securityManager") * @return
      */
@@ -67,18 +63,22 @@ public class ShiroConfig {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(userRealm);
         //注入缓存管理器;
-       // securityManager.setCacheManager(ehCacheManager());//这个如果执行多次，也是同样的一个对象;
+        securityManager.setCacheManager(new EhCacheManager());//这个如果执行多次，也是同样的一个对象;
         return securityManager;
     }
 
     /**
      * 官方配置
-     * @return
+     *  Shiro生命周期处理器 * @return
      */
     @Bean
     public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
         return new LifecycleBeanPostProcessor();
     }
+    /**
+     * 开启Shiro的注解(如@RequiresRoles,@RequiresPermissions),需借助SpringAOP扫描使用Shiro注解的类,
+     * 并在必要时进行安全逻辑验证 * 配置以下两个bean(DefaultAdvisorAutoProxyCreator(可选)和AuthorizationAttributeSourceAdvisor)即可实现此功能 * @return
+     */
     @Bean
     @DependsOn({"lifecycleBeanPostProcessor"})
     public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator(
@@ -91,21 +91,15 @@ public class ShiroConfig {
     public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor() {
         return new AuthorizationAttributeSourceAdvisor();
     }
+    //shiro 标签
     @Bean
     public ShiroDialect shiroDialect() {
         return new ShiroDialect();
     }
+
 //    /**
-//     * Shiro生命周期处理器 * @return
-//     */
-//    @Bean
-//    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
-//        return new LifecycleBeanPostProcessor();
-//    }
-//
-//
-//    /**
-//     * 开启Shiro的注解(如@RequiresRoles,@RequiresPermissions),需借助SpringAOP扫描使用Shiro注解的类,并在必要时进行安全逻辑验证 * 配置以下两个bean(DefaultAdvisorAutoProxyCreator(可选)和AuthorizationAttributeSourceAdvisor)即可实现此功能 * @return
+//     * 开启Shiro的注解(如@RequiresRoles,@RequiresPermissions),需借助SpringAOP扫描使用Shiro注解的类,并在必要时进行安全逻辑验证 *
+//     * 配置以下两个bean(DefaultAdvisorAutoProxyCreator(可选)和AuthorizationAttributeSourceAdvisor)即可实现此功能 * @return
 //     */
 //    @Bean
 //    @DependsOn({"lifecycleBeanPostProcessor"})

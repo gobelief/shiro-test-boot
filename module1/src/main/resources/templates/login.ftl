@@ -8,8 +8,9 @@
 <center>
     <h1><shiro:user><shiro:principal property="name"/></shiro:user>login success!</h1>
     <p shiro:user="">
-        Welcome back <p>${account}</p>! Not <p>${account}</p>? Click <a href="login.html">here</a> to login.
+        Welcome back <p>${account}</p>! Not <p>${account}</p>? Click
     </p>
+    <p><a href="/c/logout">logout</a></p>
     <span id="data"></span>
 </center>
 </body>

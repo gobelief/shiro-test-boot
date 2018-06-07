@@ -4,9 +4,11 @@ spring:
     username: root
     password: root
   session:
-    jdbc:
-      table-name: spring_session
-    store-type: none
+#    jdbc:
+#      table-name: spring_session
+    store-type: redis
+    redis:
+      namespace: spring:session
   freemarker:
     cache: false
     suffix: .ftl
@@ -16,3 +18,29 @@ spring:
     mode: HTML5
     encoding: UTF-8
     suffix: .html
+  redis:
+    host: localhost
+    port: 6379
+    jedis:
+      pool:
+        max-idle: 8
+        max-wait: -1ms
+
+mybatis:
+  config-locations: classpath:mapper/*.xml
+myRedis:
+  host: localhost
+  port: 6379
+  index: 1
+  max-idle: 8
+  password:
+mapper:
+  mappers:
+      - com.module1.utils.MyMapper
+  not-empty: false
+  identity: MYSQL
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.module1.project.mapper.UserMapper">
+
+    <!--<select id="byName" resultType="com.module1.project.pojo.User">-->
+        <!--SELECT username,password,id FROM user-->
+        <!--where  username = #{username}-->
+    <!--</select>-->
+    <!--<select id="selectAll" resultType="com.module1.project.pojo.User"></select>-->
+</mapper>

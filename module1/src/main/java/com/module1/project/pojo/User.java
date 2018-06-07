@@ -1,14 +1,15 @@
 package com.module1.project.pojo;
 
+import com.module1.utils.BaseEntity;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
-public class User {
+public class User extends BaseEntity {
     private
             String
-                    id,
+//                    id,
                     username,
                     password,
                     role,

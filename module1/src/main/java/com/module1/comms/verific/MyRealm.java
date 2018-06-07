@@ -1,22 +1,23 @@
-package com.module1.project.verific;
+package com.module1.comms.verific;
 
 import com.module1.project.pojo.User;
+import com.module1.project.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
-import org.apache.shiro.authc.credential.CredentialsMatcher;
-import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
-import org.apache.shiro.util.ByteSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class MyRealm extends AuthorizingRealm {
-
-
+    @Autowired
+    private UserService userService;
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         principalCollection.getPrimaryPrincipal();
@@ -35,18 +36,13 @@ public class MyRealm extends AuthorizingRealm {
         UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) authenticationToken;
         Object o = SecurityUtils.getSubject().getPrincipal();
         String username = usernamePasswordToken.getUsername();
-        String host = usernamePasswordToken.getHost();
-        User user = new User();
-        user.setUsername("root");
-//        user.setPassword("root");// fc1709d0a95a6be30bc5926fdb7f22f4
-        user.setPassword("bf006e276607f226f96120354349d81c");
-        if (username != null) {
-//            ByteSource.Util.bytes();
-//            SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(SecurityUtils.getSubject().getPrincipal(),
-//                    user.getPassword(), credentialsSalt, realmName);
-//            SimpleAuthenticationInfo a = new SimpleAuthenticationInfo(user.getUsername(),ByteSource.Util.bytes(user.getPassword()),getName());
-            SimpleAuthenticationInfo a = new SimpleAuthenticationInfo(user.getUsername(),user.getPassword(),getName());
-            return a;
+        List<User> list = userService.byName(username);
+        if (list.size() != 1){
+            return null;
+        }
+        User user = list.get(0);
+        if (user != null) {
+            return new SimpleAuthenticationInfo(user.getUsername(),user.getPassword(),getName());
         }
         return null;
     }
