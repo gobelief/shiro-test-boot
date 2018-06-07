@@ -12,6 +12,7 @@
     </p>
     <p><a href="/c/logout">logout</a></p>
     <span id="data"></span>
+
 </center>
 </body>
 <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
