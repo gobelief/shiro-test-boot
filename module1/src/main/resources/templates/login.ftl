@@ -22,5 +22,8 @@
         console.info(data);
         $('#data').html(data.user);
     })
+    $.get('/c/userAll',function (data) {
+        console.info(data);
+    });
 </script>
 </html>

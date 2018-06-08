@@ -25,7 +25,14 @@ spring:
       pool:
         max-idle: 8
         max-wait: -1ms
-
+  jpa:
+    show-sql: true
+logging:
+  level:
+    com:
+      module1:
+        project:
+          mapper: DEBUG
 mybatis:
   config-locations: classpath:mapper/*.xml
 myRedis:

@@ -18,7 +18,8 @@ import java.util.Timer;
 
 @SpringBootApplication
 @ComponentScan
-@MapperScan(basePackages = {"com.module1.project.mapper"})
+//@MapperScan(basePackages = {"com.module1.project.mapper"})
+@tk.mybatis.spring.annotation.MapperScan(basePackages = {"com.module1.project.mapper"})
 public class Module1Application {
     private Logger logger = LoggerFactory.getLogger(Module1Application.class);
     public static void main(String[] args) {

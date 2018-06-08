@@ -1,5 +1,6 @@
 package com.module1;
 
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,11 @@ public class Module1ApplicationTests {
         RedisConnectionFactory c2 = template.getRequiredConnectionFactory();
         template.opsForValue().set("db1","db1");
         System.out.println("======");
+        String hashAlgorithmName = "MD5";
+        String credentials = "123456";
+        int hashIterations = 1024;
+        Object obj = new SimpleHash(hashAlgorithmName, credentials, null, hashIterations);
+        System.out.println(obj);
 //        jedis.getSet("test","ttt");
     }
 

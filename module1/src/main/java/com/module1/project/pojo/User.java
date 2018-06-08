@@ -3,6 +3,7 @@ package com.module1.project.pojo;
 import com.module1.comms.utils.BaseEntity;
 import lombok.Data;
 
+import javax.persistence.Transient;
 import java.util.List;
 
 @Data
@@ -11,7 +12,9 @@ public class User extends BaseEntity {
             String
 //                    id,
                     username,
-                    password,
+                    password;
+    @Transient
+    private String
                     role,
                     permission;
     private
